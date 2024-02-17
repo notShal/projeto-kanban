@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kanban Board</title>
-    <script src="js/scripts.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,10 +16,10 @@
 <body>
     <div class="header">
         <h1>Kanban Board</h1>
-        <button id="openModalBtn">Nova Tarefa</button>
+        <button class="primary" onclick="openModal()">Nova Tarefa</button>
     </div>
     <div class="container">
-        <div class="column">
+        <div class="column" id="todoColumn">
             <div class="head">
                 <span>A fazer</span>
             </div>
@@ -60,16 +59,34 @@
         <div class="box">
             <div class="head">
                 <span>Nova tarefa</span>
-                <button>x</button>
+                <button onclick="closeModal()">x</button>
             </div>
             <div class="form">
                 <div class="form-group">
                     <label for="description">Descrição</label>
                     <textarea id="description" rows="3"></textarea>
                 </div>
+
+                <div class="form-group">
+                    <label for="priority"></label>
+                    <select id="priority">
+                        <option>Baixa</option>
+                        <option>Média</option>
+                        <option>Alta</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="prazo"></label>
+                    <input type="date" id="deadLine">
+                </div>
+
+                <button class="primary" onclick="createTask()">Cadastrar</button>
             </div>
         </div>
     </div>
+    <script src="js/moment.min.js"></script>
+    <script src="js/scripts.js"></script>
 </body>
 
 </html>
