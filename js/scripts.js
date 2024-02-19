@@ -94,7 +94,23 @@ function createTask() {
     generateCards();
 }
 
+function updateTask() {
+    const task = {
+        id: $idInput.value,
+        description: $descriptionInput.value,
+        priority: $priorityInput.value,
+        deadLine: $deadLineInput.value,        
+    }
 
+    const index = todoList.findIndex(function(task) {
+        return task.id == $idInput.value;
+    });
+
+    todoList[index] = task;
+
+    closeModal();
+    generateCards();
+}
 
 
 
