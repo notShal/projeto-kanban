@@ -2,9 +2,8 @@ const $modal = document.getElementById('modal');
 const $descriptionInput = document.getElementById('description');
 const $priorityInput = document.getElementById('priority');
 const $deadLineInput = document.getElementById('deadLine');
+const $columnInput = document.getElementById('column');
 const $idInput = document.getElementById('idInput');
-
-const $todoColumnBody = document.querySelector('#todoColumn .body');
 
 const $creationModeTitle = document.getElementById('creationModeTitle');
 const $editModeTitle = document.getElementById('editModeTitle');
@@ -12,7 +11,7 @@ const $editModeTitle = document.getElementById('editModeTitle');
 const $creationModeBtn = document.getElementById('creationModeBtn');
 const $editModeBtn = document.getElementById('editModeBtn');
 
-var todoList = [];
+var taskList = [];
 
 function openModal(id) {
     $modal.style.display = "flex";
@@ -24,7 +23,7 @@ function openModal(id) {
         $editModeTitle.style.display = "block";
         $editModeBtn.style.display = "block";
 
-        const index = todoList.findIndex(function (task) {
+        const index = taskList.findIndex(function (task) {
             return task.id == id;
         });
 
@@ -54,9 +53,12 @@ function closeModal() {
 }
 
 function generateCards() {
-    const todoListHtml = todoList.map(function (task) {
+    taskList.forEach(function (task) {
         const formattedDate = moment(task.deadLine).format('DD/MM/YYYY');
-        return `
+
+        const columnBody = document.querySelector(`[data-column="${task.column}"] .body`);
+
+        const card = `
             <div class="card" ondblclick="openModal(${task.id})">
                 <div class="info">
                     <b>Descrição:</b>
@@ -74,9 +76,9 @@ function generateCards() {
                 </div>
             </div>
         `;
-    });
 
-    $todoColumnBody.innerHTML = todoListHtml.join('');
+        columnBody.innerHTML += card;
+    });
 }
 
 function createTask() {
@@ -86,6 +88,7 @@ function createTask() {
         description: $descriptionInput.value,
         priority: $priorityInput.value,
         deadLine: $deadLineInput.value,
+        column: $columnInput.value,
     }
 
     todoList.push(newTask);
@@ -99,10 +102,11 @@ function updateTask() {
         id: $idInput.value,
         description: $descriptionInput.value,
         priority: $priorityInput.value,
-        deadLine: $deadLineInput.value,        
+        deadLine: $deadLineInput.value,
+        column: $columnInput.value,
     }
 
-    const index = todoList.findIndex(function(task) {
+    const index = todoList.findIndex(function (task) {
         return task.id == $idInput.value;
     });
 
