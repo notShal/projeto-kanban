@@ -19,21 +19,32 @@
         <h1>Kanban Board</h1>
         <button class="primary" onclick="openModal()">Nova Tarefa</button>
     </div>
+
     <div class="container">
         <div class="column" data-column="1">
             <div class="head">
                 <span>A fazer</span>
             </div>
             <div class="body">
-
+                <div class="cards_list"></div>
+                <button class="add_btn" onclick="openModal(1)">
+                    <span class="material-icons">add</span>
+                    Adicionar item
+                </button>
             </div>
         </div>
+
         <div class="column" data-column="2">
             <div class="head">
                 <span>Em progresso</span>
             </div>
             <div class="body">
-
+                <div class="cards_list">
+                    <button class="add_btn" onclick="openModal(2)">
+                        <span class="material-icons">add</span>
+                        Adicionar item
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -42,7 +53,12 @@
                 <span>Finalizado</span>
             </div>
             <div class="body">
-
+                <div class="cards_list">
+                    <button class="add_btn" onclick="openModal(3)">
+                        <span class="material-icons">add</span>
+                        Adicionar item
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -51,7 +67,12 @@
                 <span>Arquivado</span>
             </div>
             <div class="body">
-
+                <div class="cards_list">
+                    <button class="add_btn" onclick="openModal(4)">
+                        <span class="material-icons">add</span>
+                        Adicionar item
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -65,7 +86,6 @@
                     close
                 </button>
             </div>
-
             <div class="form">
                 <input type="hidden" id="idInput">
 

@@ -13,34 +13,39 @@ const $editModeBtn = document.getElementById('editModeBtn');
 
 var taskList = [];
 
-function openModal(id) {
+function openModal(data_column) {
     $modal.style.display = "flex";
 
-    if (id) {
-        $creationModeTitle.style.display = "none";
-        $creationModeBtn.style.display = "none";
+    $columnInput.value = data_column;
 
-        $editModeTitle.style.display = "block";
-        $editModeBtn.style.display = "block";
+    $creationModeTitle.style.display = "block";
+    $creationModeBtn.style.display = "block";
 
-        const index = taskList.findIndex(function (task) {
-            return task.id == id;
-        });
+    $editModeTitle.style.display = "none";
+    $editModeBtn.style.display = "none";
 
-        const task = todoList[index];
+}
 
-        $idInput.value = task.id;
-        $descriptionInput.value = task.description;
-        $priorityInput.value = task.priority;
-        $deadLineInput.value = task.deadLine;
-    } else {
-        $creationModeTitle.style.display = "block";
-        $creationModeBtn.style.display = "block";
+function openModalToEdit(id) {
+    $modal.style.display = "flex";
 
-        $editModeTitle.style.display = "none";
-        $editModeBtn.style.display = "none";
+    $creationModeTitle.style.display = "none";
+    $creationModeBtn.style.display = "none";
 
-    }
+    $editModeTitle.style.display = "block";
+    $editModeBtn.style.display = "block";
+
+    const index = taskList.findIndex(function (task) {
+        return task.id == id;
+    });
+
+    const task = todoList[index];
+
+    $idInput.value = task.id;
+    $descriptionInput.value = task.description;
+    $priorityInput.value = task.priority;
+    $deadLineInput.value = task.deadLine;
+    $columnInput.value = task.column;
 }
 
 function closeModal() {
@@ -50,16 +55,28 @@ function closeModal() {
     $descriptionInput.value = "";
     $priorityInput.value = "";
     $deadLineInput.value = "";
+    $columnInput.value = "";
+}
+
+function resetColumns() {
+    document.querySelector('[data-column="1"] .body .cards_list').innerHTML = '';
+    document.querySelector('[data-column="2"] .body .cards_list').innerHTML = '';
+    document.querySelector('[data-column="3"] .body .cards_list').innerHTML = '';
+    document.querySelector('[data-column="4"] .body .cards_list').innerHTML = '';
+
 }
 
 function generateCards() {
+
+    resetColumns();
+
     taskList.forEach(function (task) {
         const formattedDate = moment(task.deadLine).format('DD/MM/YYYY');
 
-        const columnBody = document.querySelector(`[data-column="${task.column}"] .body`);
+        const columnBody = document.querySelector(`[data-column="${task.column}"] .body .cards_list`);
 
         const card = `
-            <div class="card" ondblclick="openModal(${task.id})">
+            <div class="card" ondblclick="openModalToEdit(${task.id})">
                 <div class="info">
                     <b>Descrição:</b>
                     <span>${task.description}</span>
@@ -91,7 +108,7 @@ function createTask() {
         column: $columnInput.value,
     }
 
-    todoList.push(newTask);
+    taskList.push(newTask);
 
     closeModal();
     generateCards();
